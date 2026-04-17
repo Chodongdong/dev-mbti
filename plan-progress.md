@@ -15,7 +15,7 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 | PR 2 | `feature/landing-page` | Zustand, 공통 컴포넌트, Storybook | ✅ 완료 (머지 대기) |
 | PR 3 | `feature/landing-page` | 랜딩 페이지 UI | ✅ 완료 |
 | PR 4 | `feature/result-page` | 결과 페이지 UI | ✅ 완료 (PR 대기) |
-| PR 5 | `feature/compare` | 개발자 궁합 비교 기능 | ⬜ 예정 |
+| PR 5 | `feature/compare` | 개발자 궁합 비교 기능 | ✅ 완료 (PR 대기) |
 | PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ⬜ 예정 |
 | PR 7 | `feature/types-page` | 전체 유형 소개 페이지 | ⬜ 예정 |
 | PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ⬜ 예정 |
@@ -67,19 +67,29 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 
 ---
 
-## 다음 작업: PR 5 — 개발자 궁합 비교 기능
+## 다음 작업: PR 6 — 공유 카드 + OG 이미지 생성
 
-브랜치: `feature/compare` (예정)
+브랜치: `feature/share` (예정)
 
 ### 구현 예정
 ```
-/compare
-├── 두 유저 입력 폼 (userA, userB)
-├── 두 유저 프로필 나란히 표시
-├── 4축 비교 차트
-├── 궁합 점수 + AI 설명
-└── 강점/도전 카드
+- SNS 공유용 OG 이미지 생성 (Vercel OG / @vercel/og)
+- 결과 페이지 공유 버튼
+- 카카오/트위터/링크 복사
 ```
+
+---
+
+### ✅ PR 5 — 개발자 궁합 비교 페이지
+**커밋**: `97db86b`
+
+- `/compare` 페이지 구현
+- 두 유저 입력 폼 (URL 쿼리 파라미터 `userA`/`userB` 프리필 지원)
+- 두 유저 프로필 카드 나란히 표시 (유형 색상 테마)
+- 궁합 점수 애니메이션 원형 게이지 (SVG + Framer Motion)
+- Recharts `RadarChart`로 4축 스타일 비교
+- 강점/도전 카드
+- CTA (다른 유저 분석 / 다시 비교 / 개별 결과 보기)
 
 ---
 
