@@ -1,0 +1,119 @@
+# dev-mbti 개발 계획 및 진행 상황
+
+## 프로젝트 개요
+
+GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비스.
+포트폴리오용 프로젝트로, 개발자가 흥미를 느낄 수 있는 주제로 기획.
+
+---
+
+## 전체 PR 계획
+
+| PR | 브랜치 | 내용 | 상태 |
+|----|--------|------|------|
+| PR 1 | `main` | 프로젝트 초기 세팅 | ✅ 완료 |
+| PR 2 | `feature/landing-page` | Zustand, 공통 컴포넌트, Storybook | ✅ 완료 (머지 대기) |
+| PR 3 | `feature/landing-page` | 랜딩 페이지 UI | ✅ 완료 |
+| PR 4 | `feature/result-page` | 결과 페이지 UI | 🔜 다음 작업 (구현 완료, PR 대기) |
+| PR 5 | `feature/compare` | 개발자 궁합 비교 기능 | ⬜ 예정 |
+| PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ⬜ 예정 |
+| PR 7 | `feature/types-page` | 전체 유형 소개 페이지 | ⬜ 예정 |
+| PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ⬜ 예정 |
+| PR 9 | `feature/polish` | 애니메이션 + UI 마무리 | ⬜ 예정 |
+
+---
+
+## 완료된 작업
+
+### ✅ PR 1 — 프로젝트 초기 세팅
+**커밋**: `a2e1709`, `932185f`
+
+- Next.js 16 + TypeScript + Tailwind CSS v4 + shadcn/ui 세팅
+- 개발자 유형 8종 상수 정의 (`src/constants/devTypes.ts`)
+- 전체 타입 정의 (`src/types/index.ts`)
+- GitHub REST API 데이터 수집 유틸 (`src/lib/github.ts`)
+- Gemini 1.5 Flash API 연동 유틸 (`src/lib/gemini.ts`)
+- 분석/비교 API 라우트 구현 (`/api/analyze`, `/api/compare`)
+- localStorage 히스토리 유틸 (`src/lib/history.ts`)
+- CLAUDE.md 작성
+
+### ✅ PR 2 — Zustand 스토어, 공통 컴포넌트, Storybook
+**커밋**: `7b74b90`
+
+- Zustand `analysisStore` — 분석/비교/히스토리 전체 상태 및 API 호출
+- 공통 컴포넌트 4종
+  - `DevTypeCard` — sm/md/lg 사이즈, hover 애니메이션
+  - `GithubInput` — 유저네임 입력 폼, 로딩 상태
+  - `LoadingSpinner` — 단계별 분석 메시지 애니메이션
+  - `HistoryList` — localStorage 기반 최근 분석 목록
+- Storybook 10 세팅 (Vitest, a11y, docs 애드온)
+- 공통 컴포넌트 스토리 3종 작성
+
+---
+
+## 다음 작업: PR 4 — 결과 페이지 UI
+
+브랜치: `feature/result-page` (현재 위치)
+
+### 구현 완료
+```
+/result/[username]  (page.tsx)
+├── 헤더 — 로고 + 뒤로가기
+├── 프로필 + 유형 히어로 — 아바타, 유형명, emoji, AI 설명, 밈 문구
+├── 4축 분석 — 애니메이션 진행 바 (코드스타일/작업패턴/커밋습관/문서화)
+├── GitHub 통계 차트 — 언어 파이차트 + 커밋 시간대 바 차트 (Recharts)
+├── 강점/약점 카드
+├── 닮은 오픈소스 + 학습 로드맵
+├── GitHub 요약 (레포수, 커밋수, 팔로워, 커밋 길이) + 주요 레포
+└── CTA — 다른 유저 분석하기 / 궁합 비교하기
+```
+
+---
+
+## 페이지 구성
+
+```
+/                → 랜딩 페이지 (입력 폼 + 유형 미리보기)
+/result/[user]   → 분석 결과 페이지
+/compare         → 두 유저 비교
+/types           → 전체 유형 소개 페이지
+```
+
+---
+
+## 기능 목록
+
+### Core
+- [x] GitHub 유저 데이터 수집 (언어, 커밋 패턴, 시간대)
+- [x] Gemini API 유형 분류
+- [x] 랜딩 페이지
+- [x] 결과 페이지
+
+### 확장 기능
+- [ ] 공유 카드 (SNS 공유용 OG 이미지)
+- [ ] 개발자 궁합 비교
+- [ ] 유형별 추천 학습 로드맵
+- [ ] 최근 분석 히스토리
+- [ ] 유형 랭킹
+
+### 재미 요소
+- [ ] 유형별 밈 문구
+- [ ] 닮은 오픈소스 프로젝트 매칭
+- [ ] 커밋 시간대 히트맵 시각화
+- [ ] 언어 사용 비율 차트
+
+---
+
+## 기술 스택
+
+| 역할 | 기술 |
+|------|------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| 상태 관리 | Zustand |
+| Animation | Framer Motion |
+| AI | Google Gemini 1.5 Flash (무료 티어) |
+| Charts | Recharts |
+| 컴포넌트 문서 | Storybook 10 |
+| 배포 | Vercel (예정) |

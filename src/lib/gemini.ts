@@ -66,7 +66,7 @@ export async function analyzeDevType(stats: GitHubStats): Promise<{
   similarProject: string;
   learningRoadmap: string[];
 }> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
   const prompt = buildAnalysisPrompt(stats);
 
   const result = await model.generateContent(prompt);
@@ -102,7 +102,7 @@ export async function analyzeCompatibility(
   strengths: string[];
   challenges: string[];
 }> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
 
   const prompt = `
 두 개발자의 궁합을 분석해주세요.
