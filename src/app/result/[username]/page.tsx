@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { useAnalysisStore } from "@/store/analysisStore";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
+import { ShareButtons } from "@/components/shared/ShareButtons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +29,12 @@ const AXIS_LABELS: Record<string, [string, string]> = {
   documentation: ["주석 철학자", "코드가 문서"],
 };
 
-const AXIS_KEYS = ["codeStyle", "workPattern", "commitHabit", "documentation"] as const;
+const AXIS_KEYS = [
+  "codeStyle",
+  "workPattern",
+  "commitHabit",
+  "documentation",
+] as const;
 
 const AXIS_VALUES: Record<string, Record<string, number>> = {
   codeStyle: { functional: 0, oop: 100 },
@@ -38,8 +44,14 @@ const AXIS_VALUES: Record<string, Record<string, number>> = {
 };
 
 const PIE_COLORS = [
-  "#6366f1", "#f59e0b", "#10b981", "#3b82f6",
-  "#ec4899", "#8b5cf6", "#f97316", "#ef4444",
+  "#6366f1",
+  "#f59e0b",
+  "#10b981",
+  "#3b82f6",
+  "#ec4899",
+  "#8b5cf6",
+  "#f97316",
+  "#ef4444",
 ];
 
 const TIME_LABELS: Record<string, string> = {
@@ -56,7 +68,8 @@ export default function ResultPage({
 }) {
   const { username } = use(params);
   const router = useRouter();
-  const { analysisResult, isAnalyzing, analysisError, analyze } = useAnalysisStore();
+  const { analysisResult, isAnalyzing, analysisError, analyze } =
+    useAnalysisStore();
 
   const result = analysisResult?.username === username ? analysisResult : null;
 
@@ -77,7 +90,9 @@ export default function ResultPage({
   if (analysisError) {
     return (
       <div className="flex flex-col min-h-screen items-center justify-center gap-4">
-        <p className="text-lg font-semibold text-destructive">{analysisError}</p>
+        <p className="text-lg font-semibold text-destructive">
+          {analysisError}
+        </p>
         <Button onClick={() => router.push("/")}>홈으로</Button>
       </div>
     );
@@ -85,7 +100,14 @@ export default function ResultPage({
 
   if (!result) return null;
 
-  const { devType, axes, stats, aiDescription, similarProject, learningRoadmap } = result;
+  const {
+    devType,
+    axes,
+    stats,
+    aiDescription,
+    similarProject,
+    learningRoadmap,
+  } = result;
 
   // 언어 차트 데이터 (상위 6개)
   const langData = Object.entries(stats.languages)
@@ -95,7 +117,12 @@ export default function ResultPage({
 
   // 커밋 시간대 데이터 집계 (0~23 → 오전/오후/저녁/새벽)
   const timeRaw = stats.commitTimeDistribution;
-  const timeBuckets: Record<string, number> = { morning: 0, afternoon: 0, evening: 0, night: 0 };
+  const timeBuckets: Record<string, number> = {
+    morning: 0,
+    afternoon: 0,
+    evening: 0,
+    night: 0,
+  };
   for (const [hour, count] of Object.entries(timeRaw)) {
     const h = Number(hour);
     if (h >= 6 && h < 12) timeBuckets.morning += count;
@@ -112,18 +139,23 @@ export default function ResultPage({
     <div className="flex flex-col min-h-screen bg-background">
       {/* 헤더 */}
       <header className="flex items-center justify-between px-6 py-4 border-b">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <Link
+          href="/"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+        >
           <span className="text-2xl">🧬</span>
           <span className="font-bold text-lg tracking-tight">dev-mbti</span>
         </Link>
-        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <Link
+          href="/"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
           ← 다시 분석하기
         </Link>
       </header>
 
       <main className="flex flex-col items-center flex-1 px-4 pb-20">
         <div className="w-full max-w-3xl mt-10 flex flex-col gap-8">
-
           {/* 프로필 + 유형 히어로 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -132,7 +164,10 @@ export default function ResultPage({
           >
             <Card
               className="overflow-hidden border-2"
-              style={{ borderColor: devType.color + "60", backgroundColor: devType.color + "08" }}
+              style={{
+                borderColor: devType.color + "60",
+                backgroundColor: devType.color + "08",
+              }}
             >
               <CardContent className="p-8">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -149,16 +184,22 @@ export default function ResultPage({
                   {/* 유형 정보 */}
                   <div className="flex flex-col gap-2 text-center sm:text-left">
                     <div className="flex items-center justify-center sm:justify-start gap-2">
-                      <span className="text-sm text-muted-foreground">@{username}</span>
+                      <span className="text-sm text-muted-foreground">
+                        @{username}
+                      </span>
                       {result.name && (
-                        <span className="text-sm font-medium">{result.name}</span>
+                        <span className="text-sm font-medium">
+                          {result.name}
+                        </span>
                       )}
                     </div>
                     <div className="flex items-center justify-center sm:justify-start gap-3">
                       <span className="text-5xl">{devType.emoji}</span>
                       <div>
                         <p className="text-2xl font-bold">{devType.name}</p>
-                        <p className="text-sm text-muted-foreground">{devType.shortDescription}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {devType.shortDescription}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -166,7 +207,9 @@ export default function ResultPage({
 
                 {/* AI 설명 */}
                 <div className="mt-6 p-4 rounded-lg bg-background/60 border">
-                  <p className="text-sm leading-relaxed text-muted-foreground">{aiDescription}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {aiDescription}
+                  </p>
                 </div>
 
                 {/* 밈 */}
@@ -206,11 +249,22 @@ export default function ResultPage({
                           style={{ backgroundColor: devType.color }}
                           initial={{ width: "0%" }}
                           animate={{ width: `${val}%` }}
-                          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                          transition={{
+                            duration: 0.8,
+                            delay: 0.3,
+                            ease: "easeOut",
+                          }}
                         />
                       </div>
-                      <p className="text-xs text-right mt-1 font-medium" style={{ color: devType.color }}>
-                        {val <= 30 ? leftLabel : val >= 70 ? rightLabel : "중간형"}
+                      <p
+                        className="text-xs text-right mt-1 font-medium"
+                        style={{ color: devType.color }}
+                      >
+                        {val <= 30
+                          ? leftLabel
+                          : val >= 70
+                            ? rightLabel
+                            : "중간형"}
                       </p>
                     </div>
                   );
@@ -246,20 +300,27 @@ export default function ResultPage({
                           dataKey="value"
                         >
                           {langData.map((_, i) => (
-                            <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+                            <Cell
+                              key={i}
+                              fill={PIE_COLORS[i % PIE_COLORS.length]}
+                            />
                           ))}
                         </Pie>
-                        <Tooltip
-                          formatter={(value) => [`${value}%`, ""]}
-                        />
+                        <Tooltip formatter={(value) => [`${value}%`, ""]} />
                       </PieChart>
                     </ResponsiveContainer>
                     <div className="flex flex-wrap gap-2 mt-2 justify-center">
                       {langData.map((item, i) => (
-                        <span key={item.name} className="flex items-center gap-1 text-xs">
+                        <span
+                          key={item.name}
+                          className="flex items-center gap-1 text-xs"
+                        >
                           <span
                             className="inline-block w-2 h-2 rounded-full"
-                            style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }}
+                            style={{
+                              backgroundColor:
+                                PIE_COLORS[i % PIE_COLORS.length],
+                            }}
                           />
                           {item.name}
                         </span>
@@ -267,7 +328,9 @@ export default function ResultPage({
                     </div>
                   </>
                 ) : (
-                  <p className="text-sm text-muted-foreground text-center py-8">언어 데이터 없음</p>
+                  <p className="text-sm text-muted-foreground text-center py-8">
+                    언어 데이터 없음
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -279,11 +342,18 @@ export default function ResultPage({
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={timeData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+                  <BarChart
+                    data={timeData}
+                    margin={{ top: 4, right: 4, left: -20, bottom: 0 }}
+                  >
                     <XAxis dataKey="name" tick={{ fontSize: 10 }} />
                     <YAxis tick={{ fontSize: 10 }} />
                     <Tooltip />
-                    <Bar dataKey="value" fill={devType.color} radius={[4, 4, 0, 0]} />
+                    <Bar
+                      dataKey="value"
+                      fill={devType.color}
+                      radius={[4, 4, 0, 0]}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -339,7 +409,10 @@ export default function ResultPage({
               <CardContent>
                 <div
                   className="inline-block px-3 py-1.5 rounded-md text-sm font-semibold"
-                  style={{ backgroundColor: devType.color + "20", color: devType.color }}
+                  style={{
+                    backgroundColor: devType.color + "20",
+                    color: devType.color,
+                  }}
                 >
                   {similarProject}
                 </div>
@@ -359,7 +432,10 @@ export default function ResultPage({
                     <Badge
                       variant="outline"
                       className="text-xs shrink-0"
-                      style={{ borderColor: devType.color + "60", color: devType.color }}
+                      style={{
+                        borderColor: devType.color + "60",
+                        color: devType.color,
+                      }}
                     >
                       {i + 1}
                     </Badge>
@@ -386,13 +462,21 @@ export default function ResultPage({
                     { label: "공개 레포", value: stats.publicRepos },
                     { label: "총 커밋", value: stats.totalCommits },
                     { label: "팔로워", value: stats.followers },
-                    { label: "평균 커밋 길이", value: `${stats.avgCommitMessageLength}자` },
+                    {
+                      label: "평균 커밋 길이",
+                      value: `${stats.avgCommitMessageLength}자`,
+                    },
                   ].map(({ label, value }) => (
                     <div key={label} className="text-center">
-                      <p className="text-2xl font-bold" style={{ color: devType.color }}>
+                      <p
+                        className="text-2xl font-bold"
+                        style={{ color: devType.color }}
+                      >
                         {value}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">{label}</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -407,7 +491,9 @@ export default function ResultPage({
                           className="flex items-center justify-between px-3 py-2 rounded-md bg-muted/50"
                         >
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium">{repo.name}</span>
+                            <span className="text-sm font-medium">
+                              {repo.name}
+                            </span>
                             {repo.language && (
                               <Badge variant="secondary" className="text-xs">
                                 {repo.language}
@@ -415,7 +501,9 @@ export default function ResultPage({
                             )}
                           </div>
                           {repo.stars > 0 && (
-                            <span className="text-xs text-muted-foreground">⭐ {repo.stars}</span>
+                            <span className="text-xs text-muted-foreground">
+                              ⭐ {repo.stars}
+                            </span>
                           )}
                         </div>
                       ))}
@@ -426,11 +514,27 @@ export default function ResultPage({
             </Card>
           </motion.div>
 
-          {/* CTA */}
+          {/* 공유 */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">📣 결과 공유하기</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ShareButtons typeName={devType.name} emoji={devType.emoji} />
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-3 justify-center"
           >
             <Button variant="outline" onClick={() => router.push("/")}>
@@ -443,12 +547,12 @@ export default function ResultPage({
               개발자 궁합 비교하기
             </Button>
           </motion.div>
-
         </div>
       </main>
 
       <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-        public repo만 분석 가능 · GitHub API 기반 · AI 분류 결과는 재미로만 봐주세요 😄
+        public repo만 분석 가능 · GitHub API 기반 · AI 분류 결과는 재미로만
+        봐주세요 😄
       </footer>
     </div>
   );

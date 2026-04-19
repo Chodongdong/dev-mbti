@@ -16,7 +16,7 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 | PR 3 | `feature/landing-page` | 랜딩 페이지 UI | ✅ 완료 |
 | PR 4 | `feature/result-page` | 결과 페이지 UI | ✅ 완료 (PR 대기) |
 | PR 5 | `feature/compare` | 개발자 궁합 비교 기능 | ✅ 완료 (PR 대기) |
-| PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ⬜ 예정 |
+| PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ✅ 완료 |
 | PR 7 | `feature/types-page` | 전체 유형 소개 페이지 | ⬜ 예정 |
 | PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ⬜ 예정 |
 | PR 9 | `feature/polish` | 애니메이션 + UI 마무리 | ⬜ 예정 |
@@ -67,16 +67,25 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 
 ---
 
-## 다음 작업: PR 6 — 공유 카드 + OG 이미지 생성
+## 다음 작업: PR 7 — 전체 유형 소개 페이지
 
-브랜치: `feature/share` (예정)
+브랜치: `feature/types-page` (예정)
 
 ### 구현 예정
 ```
-- SNS 공유용 OG 이미지 생성 (Vercel OG / @vercel/og)
-- 결과 페이지 공유 버튼
-- 카카오/트위터/링크 복사
+- /types 페이지: 8가지 유형 카드 그리드
+- 각 유형별 상세 정보 (강점/약점/유명 프로젝트/밈)
+- 유형 클릭 시 상세 모달 또는 확장 카드
 ```
+
+---
+
+### ✅ PR 6 — 공유 카드 + OG 이미지 생성
+
+- `/api/og` 라우트 — `next/og` ImageResponse로 유형별 OG 이미지 생성 (edge runtime)
+- `/result/[username]/layout.tsx` — `generateMetadata`로 페이지별 OG/Twitter 메타태그 동적 생성
+- `ShareButtons` 컴포넌트 — 트위터 공유 / 링크 복사 / Web Share API 지원
+- 결과 페이지에 "📣 결과 공유하기" 카드 추가
 
 ---
 
