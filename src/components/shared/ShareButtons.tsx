@@ -32,6 +32,7 @@ export function ShareButtons({ typeName, emoji }: ShareButtonsProps) {
       <Button
         variant="outline"
         size="sm"
+        nativeButton={false}
         render={
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`}
