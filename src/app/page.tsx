@@ -81,7 +81,12 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h2 className="text-xl font-semibold text-center mb-6">8가지 개발자 유형</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold">8가지 개발자 유형</h2>
+              <a href="/types" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                전체 보기 →
+              </a>
+            </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {DEV_TYPES.map((devType, i) => (
                 <motion.div

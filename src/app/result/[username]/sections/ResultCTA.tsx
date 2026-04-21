@@ -21,6 +21,7 @@ export function ResultCTA({ username, devType }: ResultCTAProps) {
       className="flex flex-col sm:flex-row gap-3 justify-center"
     >
       <Button variant="outline" onClick={() => router.push("/")}>다른 유저 분석하기</Button>
+      <Button variant="outline" onClick={() => router.push("/types")}>전체 유형 보기</Button>
       <Button
         onClick={() => router.push(`/compare?userA=${username}`)}
         style={{ backgroundColor: devType.color }}
