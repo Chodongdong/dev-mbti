@@ -1,8 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedSection } from "./AnimatedSection";
 import type { DevType } from "@/types";
 
 interface ProjectRoadmapProps {
@@ -13,12 +11,7 @@ interface ProjectRoadmapProps {
 
 export function ProjectRoadmap({ similarProject, learningRoadmap, devType }: ProjectRoadmapProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.4 }}
-      className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-    >
+    <AnimatedSection delay={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Card>
         <CardHeader>
           <CardTitle className="text-base">🔭 닮은 오픈소스</CardTitle>
@@ -53,6 +46,6 @@ export function ProjectRoadmap({ similarProject, learningRoadmap, devType }: Pro
           ))}
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

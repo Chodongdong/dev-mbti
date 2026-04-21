@@ -1,7 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedSection } from "./AnimatedSection";
 import type { AnalysisResult } from "@/types";
 
 interface ProfileHeroProps {
@@ -12,11 +11,7 @@ export function ProfileHero({ result }: ProfileHeroProps) {
   const { devType, username, avatarUrl, name, aiDescription } = result;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <AnimatedSection>
       <Card
         className="overflow-hidden border-2"
         style={{ borderColor: devType.color + "60", backgroundColor: devType.color + "08" }}
@@ -24,10 +19,12 @@ export function ProfileHero({ result }: ProfileHeroProps) {
         <CardContent className="p-8">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div className="shrink-0">
-              <img
+              <Image
                 src={avatarUrl}
                 alt={username}
-                className="w-20 h-20 rounded-full border-2"
+                width={80}
+                height={80}
+                className="rounded-full border-2"
                 style={{ borderColor: devType.color + "80" }}
               />
             </div>
@@ -55,6 +52,6 @@ export function ProfileHero({ result }: ProfileHeroProps) {
           </p>
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

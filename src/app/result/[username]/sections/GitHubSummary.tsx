@@ -1,8 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedSection } from "./AnimatedSection";
 import type { DevType, GitHubStats } from "@/types";
 
 interface GitHubSummaryProps {
@@ -19,11 +17,7 @@ export function GitHubSummary({ stats, devType }: GitHubSummaryProps) {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.5 }}
-    >
+    <AnimatedSection delay={0.5}>
       <Card>
         <CardHeader>
           <CardTitle className="text-base">📊 GitHub 요약</CardTitle>
@@ -60,6 +54,6 @@ export function GitHubSummary({ stats, devType }: GitHubSummaryProps) {
           )}
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }
