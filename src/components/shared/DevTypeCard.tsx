@@ -13,20 +13,21 @@ type Props = {
 
 export function DevTypeCard({ devType, onClick, size = "md" }: Props) {
   const sizeStyles = {
-    sm: "p-3",
+    sm: "p-3 min-h-[80px]",
     md: "p-5",
     lg: "p-7",
   };
 
   return (
     <motion.div
+      className="h-full"
       whileHover={{ scale: 1.03, y: -4 }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       <Card
         onClick={onClick}
-        className={`cursor-pointer border-2 transition-colors ${sizeStyles[size]}`}
+        className={`cursor-pointer border-2 transition-colors h-full flex flex-col ${sizeStyles[size]}`}
         style={{ borderColor: devType.color + "40", backgroundColor: devType.color + "08" }}
       >
         <CardHeader className="p-0 pb-3">
@@ -42,8 +43,8 @@ export function DevTypeCard({ devType, onClick, size = "md" }: Props) {
         </CardHeader>
 
         {size !== "sm" && (
-          <CardContent className="p-0">
-            <p className="text-sm text-muted-foreground mb-3">{devType.description}</p>
+          <CardContent className="p-0 flex flex-col flex-1">
+            <p className="text-sm text-muted-foreground mb-3 flex-1">{devType.description}</p>
             <div className="flex flex-wrap gap-1">
               {devType.strengths.map((s) => (
                 <Badge

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { GithubInput } from "@/components/shared/GithubInput";
 
 const meta: Meta<typeof GithubInput> = {
