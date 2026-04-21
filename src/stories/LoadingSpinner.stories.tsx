@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 const meta: Meta<typeof LoadingSpinner> = {
