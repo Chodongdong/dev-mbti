@@ -32,17 +32,26 @@ export default function ResultPage({ params }: { params: Promise<{ username: str
 
   if (isAnalyzing || (!result && !analysisError)) {
     return (
-      <div className="flex flex-col min-h-screen items-center justify-center">
-        <LoadingSpinner />
+      <div className="flex flex-col min-h-screen bg-background">
+        <AppHeader />
+        <div className="flex flex-col items-center justify-center flex-1">
+          <LoadingSpinner />
+        </div>
+        <AppFooter />
       </div>
     );
   }
 
   if (analysisError) {
     return (
-      <div className="flex flex-col min-h-screen items-center justify-center gap-4">
-        <p className="text-lg font-semibold text-destructive">{analysisError}</p>
-        <Button onClick={() => router.push("/")}>홈으로</Button>
+      <div className="flex flex-col min-h-screen bg-background">
+        <AppHeader />
+        <div className="flex flex-col items-center justify-center flex-1 gap-4 px-4 text-center">
+          <p className="text-4xl">😵</p>
+          <p className="text-lg font-semibold text-destructive">{analysisError}</p>
+          <Button onClick={() => router.push("/")}>홈으로</Button>
+        </div>
+        <AppFooter />
       </div>
     );
   }

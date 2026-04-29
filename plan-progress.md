@@ -19,7 +19,7 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 | PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ✅ 완료 |
 | PR 7 | `feature/types-page` | 전체 유형 소개 페이지 | ✅ 완료 |
 | PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ✅ 완료 (PR 대기) |
-| PR 9 | `feature/polish` | 애니메이션 + UI 마무리 | ⬜ 예정 |
+| PR 9 | `feature/polish` | 애니메이션 + UI 마무리 | ✅ 완료 (PR 대기) |
 
 ---
 
@@ -67,9 +67,19 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 
 ---
 
-## 다음 작업: PR 9 — 애니메이션 + UI 마무리
+## 🎉 모든 PR 완료
 
-브랜치: `feature/polish` (예정)
+기획된 9개 PR이 모두 완료되었습니다.
+
+---
+
+### ✅ PR 9 — 애니메이션 + UI 마무리
+**브랜치**: `feature/polish`
+
+- `AppHeader`에 글로벌 네비게이션 추가 (유형, 비교, 히스토리)
+- `AnimatedSection`을 `whileInView`로 업그레이드 (스크롤 진입 시 애니메이션)
+- `src/app/not-found.tsx` 커스텀 404 페이지 추가
+- 결과 페이지 로딩/에러 상태에 `AppHeader` + `AppFooter` 추가
 
 ---
 

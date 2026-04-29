@@ -16,13 +16,35 @@ export function AppHeader({ logoLinked = true, right }: AppHeaderProps) {
 
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b">
-      {logoLinked ? (
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          {logo}
-        </Link>
-      ) : (
-        <div className="flex items-center gap-2">{logo}</div>
-      )}
+      <div className="flex items-center gap-6">
+        {logoLinked ? (
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            {logo}
+          </Link>
+        ) : (
+          <div className="flex items-center gap-2">{logo}</div>
+        )}
+        <nav className="hidden sm:flex items-center gap-4">
+          <Link
+            href="/types"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            유형
+          </Link>
+          <Link
+            href="/compare"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            비교
+          </Link>
+          <Link
+            href="/history"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            히스토리
+          </Link>
+        </nav>
+      </div>
       {right}
     </header>
   );

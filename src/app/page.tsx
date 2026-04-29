@@ -25,14 +25,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <AppHeader
-        logoLinked={false}
-        right={
-          <p className="text-sm text-muted-foreground hidden sm:block">
-            GitHub 데이터로 분석하는 나의 개발자 유형
-          </p>
-        }
-      />
+      <AppHeader logoLinked={false} />
 
       <main className="flex flex-col items-center flex-1 px-4">
         <section className="flex flex-col items-center text-center pt-20 pb-12 gap-6 w-full max-w-2xl">
