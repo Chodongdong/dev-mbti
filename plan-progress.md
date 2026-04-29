@@ -18,7 +18,7 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 | PR 5 | `feature/compare` | 개발자 궁합 비교 기능 | ✅ 완료 (PR 대기) |
 | PR 6 | `feature/share` | 공유 카드 + OG 이미지 생성 | ✅ 완료 |
 | PR 7 | `feature/types-page` | 전체 유형 소개 페이지 | ✅ 완료 |
-| PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ⬜ 예정 |
+| PR 8 | `feature/ranking` | 히스토리 + 유형 랭킹 | ✅ 완료 (PR 대기) |
 | PR 9 | `feature/polish` | 애니메이션 + UI 마무리 | ⬜ 예정 |
 
 ---
@@ -67,15 +67,23 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 
 ---
 
-## 다음 작업: PR 8 — 히스토리 + 유형 랭킹
+## 다음 작업: PR 9 — 애니메이션 + UI 마무리
 
-브랜치: `feature/ranking` (예정)
+브랜치: `feature/polish` (예정)
 
-### 구현 예정
-```
-- 최근 분석 히스토리 페이지
-- 유형별 분석 횟수 랭킹
-```
+---
+
+### ✅ PR 8 — 히스토리 + 유형 랭킹
+**브랜치**: `feature/ranking`
+
+- `HistoryItem` 타입에 `devTypeId` 필드 추가
+- `src/lib/history.ts`에 `getRanking()` 함수 추가 (유형별 빈도 집계)
+- `/history` 페이지 신규 생성
+  - 최근 분석 유저 목록 (카드 클릭 시 결과 페이지 이동)
+  - 유형 랭킹 섹션 (색상별 진행 바 + Framer Motion 애니메이션)
+  - 히스토리 없을 때 빈 상태 UI
+  - 전체 삭제 기능
+- `HistoryList` 컴포넌트에 "전체 보기 →" 링크 추가 (`/history`)
 
 ---
 
@@ -118,6 +126,7 @@ GitHub 유저 데이터를 분석해 개발자 유형을 분류하는 웹 서비
 /result/[user]   → 분석 결과 페이지
 /compare         → 두 유저 비교
 /types           → 전체 유형 소개 페이지
+/history         → 최근 분석 히스토리 + 유형 랭킹
 ```
 
 ---

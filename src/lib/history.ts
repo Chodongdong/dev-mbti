@@ -25,3 +25,30 @@ export function clearHistory(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(HISTORY_KEY);
 }
+
+export type RankingItem = {
+  devTypeName: string;
+  devTypeEmoji: string;
+  devTypeId: string;
+  count: number;
+};
+
+export function getRanking(): RankingItem[] {
+  const history = getHistory();
+  const counts: Record<string, RankingItem> = {};
+
+  for (const item of history) {
+    const key = item.devTypeName;
+    if (!counts[key]) {
+      counts[key] = {
+        devTypeName: item.devTypeName,
+        devTypeEmoji: item.devTypeEmoji,
+        devTypeId: item.devTypeId,
+        count: 0,
+      };
+    }
+    counts[key].count++;
+  }
+
+  return Object.values(counts).sort((a, b) => b.count - a.count);
+}

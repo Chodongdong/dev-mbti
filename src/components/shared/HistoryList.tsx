@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAnalysisStore } from "@/store/analysisStore";
@@ -24,15 +25,23 @@ export function HistoryList() {
           <Clock size={14} />
           <span>최근 분석</span>
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs text-muted-foreground h-auto p-1"
-          onClick={removeHistory}
-        >
-          <Trash2 size={12} className="mr-1" />
-          전체 삭제
-        </Button>
+        <div className="flex items-center gap-1">
+          <Link
+            href="/history"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors px-1 py-1"
+          >
+            전체 보기 →
+          </Link>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs text-muted-foreground h-auto p-1"
+            onClick={removeHistory}
+          >
+            <Trash2 size={12} className="mr-1" />
+            삭제
+          </Button>
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">

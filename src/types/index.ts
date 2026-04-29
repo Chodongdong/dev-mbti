@@ -65,6 +65,7 @@ export type CompareResult = {
 export type HistoryItem = {
   username: string;
   avatarUrl: string;
+  devTypeId: string;
   devTypeName: string;
   devTypeEmoji: string;
   analyzedAt: string;

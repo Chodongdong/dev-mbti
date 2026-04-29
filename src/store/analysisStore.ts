@@ -54,6 +54,7 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
       addToHistory({
         username: data.username,
         avatarUrl: data.avatarUrl,
+        devTypeId: data.devType.id,
         devTypeName: data.devType.name,
         devTypeEmoji: data.devType.emoji,
         analyzedAt: data.analyzedAt,
