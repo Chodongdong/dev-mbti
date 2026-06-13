@@ -22,10 +22,14 @@ interface GitHubChartsProps {
 }
 
 export function GitHubCharts({ stats, devType }: GitHubChartsProps) {
+  const totalLangRepos = Object.values(stats.languages).reduce((sum, count) => sum + count, 0);
   const langData = Object.entries(stats.languages)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 6)
-    .map(([name, value]) => ({ name, value }));
+    .map(([name, count]) => ({
+      name,
+      value: totalLangRepos > 0 ? Math.round((count / totalLangRepos) * 100) : 0,
+    }));
 
   const timeBuckets: Record<string, number> = { morning: 0, afternoon: 0, evening: 0, night: 0 };
   for (const [hour, count] of Object.entries(stats.commitTimeDistribution)) {
