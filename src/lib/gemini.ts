@@ -4,6 +4,17 @@ import { DEV_TYPES } from "@/constants/devTypes";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+async function generateJSON<T>(prompt: string, parseErrorMessage: string): Promise<T> {
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
+  const result = await model.generateContent(prompt);
+  const text = result.response.text().trim();
+
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error(parseErrorMessage);
+
+  return JSON.parse(jsonMatch[0]);
+}
+
 function buildAnalysisPrompt(stats: GitHubStats): string {
   const topLanguages = Object.entries(stats.languages)
     .sort(([, a], [, b]) => b - a)
@@ -67,18 +78,17 @@ export type DevTypeAnalysis = {
   learningRoadmap: string[];
 };
 
+type RawDevTypeAnalysis = {
+  devTypeId: string;
+  axes: DevTypeAxis;
+  aiDescription: string;
+  similarProject: string;
+  learningRoadmap: string[];
+};
+
 export async function analyzeDevType(stats: GitHubStats): Promise<DevTypeAnalysis> {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
   const prompt = buildAnalysisPrompt(stats);
-
-  const result = await model.generateContent(prompt);
-  const text = result.response.text().trim();
-
-  // JSON 파싱
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error("AI 분석 결과를 파싱할 수 없어요.");
-
-  const parsed = JSON.parse(jsonMatch[0]);
+  const parsed = await generateJSON<RawDevTypeAnalysis>(prompt, "AI 분석 결과를 파싱할 수 없어요.");
 
   const devType = DEV_TYPES.find((t) => t.id === parsed.devTypeId) ?? DEV_TYPES[0];
 
@@ -91,6 +101,13 @@ export async function analyzeDevType(stats: GitHubStats): Promise<DevTypeAnalysi
   };
 }
 
+type CompatibilityResult = {
+  compatibility: number;
+  compatibilityDescription: string;
+  strengths: string[];
+  challenges: string[];
+};
+
 export async function analyzeCompatibility(
   usernameA: string,
   usernameB: string,
@@ -98,14 +115,7 @@ export async function analyzeCompatibility(
   typeB: string,
   descA: string,
   descB: string
-): Promise<{
-  compatibility: number;
-  compatibilityDescription: string;
-  strengths: string[];
-  challenges: string[];
-}> {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
-
+): Promise<CompatibilityResult> {
   const prompt = `
 두 개발자의 궁합을 분석해주세요.
 
@@ -124,10 +134,5 @@ ${descB}
 }
 `.trim();
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text().trim();
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error("궁합 분석 결과를 파싱할 수 없어요.");
-
-  return JSON.parse(jsonMatch[0]);
+  return generateJSON<CompatibilityResult>(prompt, "궁합 분석 결과를 파싱할 수 없어요.");
 }
