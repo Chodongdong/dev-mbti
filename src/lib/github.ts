@@ -34,8 +34,8 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
     }
   }
 
-  // 최근 커밋 데이터 수집 (상위 5개 repo)
-  const topReposByCommits = repos
+  // 상위 5개 non-fork repo (커밋/요약 정보 수집에 공통 사용)
+  const topNonForkRepos = repos
     .filter((r: { fork: boolean }) => !r.fork)
     .slice(0, 5);
 
@@ -45,7 +45,7 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
   let totalMessageLength = 0;
 
   await Promise.all(
-    topReposByCommits.map(async (repo: { name: string }) => {
+    topNonForkRepos.map(async (repo: { name: string }) => {
       try {
         const commits = await fetchGitHub(
           `/repos/${username}/${repo.name}/commits?author=${username}&per_page=20`
@@ -75,9 +75,7 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
     hasReadme = false;
   }
 
-  const topRepos = repos
-    .filter((r: { fork: boolean }) => !r.fork)
-    .slice(0, 5)
+  const topRepos = topNonForkRepos
     .map((r: { name: string; stargazers_count: number; language: string | null; description: string | null }) => ({
       name: r.name,
       stars: r.stargazers_count,
