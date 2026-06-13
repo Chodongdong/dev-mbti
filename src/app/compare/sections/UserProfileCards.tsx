@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import type { AnalysisResult } from "@/types";
 
 interface UserProfileCardsProps {
@@ -11,12 +11,7 @@ interface UserProfileCardsProps {
 
 export function UserProfileCards({ userA, userB }: UserProfileCardsProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="grid grid-cols-2 gap-4"
-    >
+    <AnimatedSection trigger="mount" className="grid grid-cols-2 gap-4">
       {[userA, userB].map((user) => (
         <Card
           key={user.username}
@@ -42,6 +37,6 @@ export function UserProfileCards({ userA, userB }: UserProfileCardsProps) {
           </CardContent>
         </Card>
       ))}
-    </motion.div>
+    </AnimatedSection>
   );
 }

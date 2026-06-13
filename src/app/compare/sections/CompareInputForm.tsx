@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Dispatch, SetStateAction } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 interface CompareInputFormProps {
   userA: string;
@@ -19,11 +19,7 @@ export function CompareInputForm({ userA, userB, isComparing, onUserAChange, onU
   const handleKey = (e: React.KeyboardEvent) => e.key === "Enter" && onCompare();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
+    <AnimatedSection trigger="mount">
       <Card>
         <CardHeader>
           <CardTitle className="text-base">두 개발자의 GitHub 유저네임을 입력하세요</CardTitle>
@@ -51,6 +47,6 @@ export function CompareInputForm({ userA, userB, isComparing, onUserAChange, onU
           </Button>
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

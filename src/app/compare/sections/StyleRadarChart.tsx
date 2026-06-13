@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { AXIS_KEYS, AXIS_SHORT_LABELS, getAxisValue } from "@/constants/axes";
 import type { CompareResult } from "@/types";
 
@@ -20,11 +20,7 @@ export function StyleRadarChart({ compareResult }: StyleRadarChartProps) {
   }));
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.2 }}
-    >
+    <AnimatedSection trigger="mount" delay={0.2}>
       <Card>
         <CardHeader>
           <CardTitle className="text-base">개발 스타일 비교</CardTitle>
@@ -51,6 +47,6 @@ export function StyleRadarChart({ compareResult }: StyleRadarChartProps) {
           </ResponsiveContainer>
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

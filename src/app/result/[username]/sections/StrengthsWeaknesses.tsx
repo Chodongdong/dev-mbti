@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AnimatedSection } from "./AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import type { DevType } from "@/types";
 
 interface StrengthsWeaknessesProps {

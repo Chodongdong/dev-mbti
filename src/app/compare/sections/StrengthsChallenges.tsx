@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 interface StrengthsChallengesProps {
   strengths: string[];
@@ -10,12 +10,7 @@ interface StrengthsChallengesProps {
 
 export function StrengthsChallenges({ strengths, challenges }: StrengthsChallengesProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.3 }}
-      className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-    >
+    <AnimatedSection trigger="mount" delay={0.3} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Card>
         <CardHeader>
           <CardTitle className="text-base">💪 함께하면 강점</CardTitle>
@@ -42,6 +37,6 @@ export function StrengthsChallenges({ strengths, challenges }: StrengthsChalleng
           ))}
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

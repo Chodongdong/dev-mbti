@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 
 interface CompatibilityScoreProps {
   compatibility: number;
@@ -13,11 +14,7 @@ export function CompatibilityScore({ compatibility, compatibilityDescription }: 
   const offset = circumference * (1 - compatibility / 100);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.1 }}
-    >
+    <AnimatedSection trigger="mount" delay={0.1}>
       <Card>
         <CardContent className="p-8 flex flex-col items-center gap-4">
           <p className="text-sm text-muted-foreground">개발자 궁합 점수</p>
@@ -50,6 +47,6 @@ export function CompatibilityScore({ compatibility, compatibilityDescription }: 
           </p>
         </CardContent>
       </Card>
-    </motion.div>
+    </AnimatedSection>
   );
 }

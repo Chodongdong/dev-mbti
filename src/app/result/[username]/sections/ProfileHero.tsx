@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { AnimatedSection } from "./AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import type { AnalysisResult } from "@/types";
 
 interface ProfileHeroProps {

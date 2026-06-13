@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AnimatedSection } from "./AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import type { DevType } from "@/types";
 
 interface ProjectRoadmapProps {
