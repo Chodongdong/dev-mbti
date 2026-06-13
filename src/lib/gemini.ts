@@ -59,13 +59,15 @@ ${devTypeOptions}
 `.trim();
 }
 
-export async function analyzeDevType(stats: GitHubStats): Promise<{
+export type DevTypeAnalysis = {
   devType: DevType;
   axes: DevTypeAxis;
   aiDescription: string;
   similarProject: string;
   learningRoadmap: string[];
-}> {
+};
+
+export async function analyzeDevType(stats: GitHubStats): Promise<DevTypeAnalysis> {
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
   const prompt = buildAnalysisPrompt(stats);
 

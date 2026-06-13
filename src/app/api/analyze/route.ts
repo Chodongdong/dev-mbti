@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGitHubStats } from "@/lib/github";
 import { analyzeDevType } from "@/lib/gemini";
-import { AnalysisResult } from "@/types";
+import { buildAnalysisResult } from "@/lib/analysis";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -13,21 +13,8 @@ export async function GET(request: NextRequest) {
 
   try {
     const stats = await getGitHubStats(username);
-    const { devType, axes, aiDescription, similarProject, learningRoadmap } =
-      await analyzeDevType(stats);
-
-    const result: AnalysisResult = {
-      username: stats.username,
-      avatarUrl: stats.avatarUrl,
-      name: stats.name,
-      devType,
-      axes,
-      stats,
-      aiDescription,
-      similarProject,
-      learningRoadmap,
-      analyzedAt: new Date().toISOString(),
-    };
+    const analysis = await analyzeDevType(stats);
+    const result = buildAnalysisResult(stats, analysis);
 
     return NextResponse.json(result);
   } catch (error) {

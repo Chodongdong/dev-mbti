@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGitHubStats } from "@/lib/github";
 import { analyzeDevType, analyzeCompatibility } from "@/lib/gemini";
-import { AnalysisResult, CompareResult } from "@/types";
+import { buildAnalysisResult } from "@/lib/analysis";
+import { CompareResult } from "@/types";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -23,31 +24,8 @@ export async function GET(request: NextRequest) {
       analyzeDevType(statsB),
     ]);
 
-    const resultA: AnalysisResult = {
-      username: statsA.username,
-      avatarUrl: statsA.avatarUrl,
-      name: statsA.name,
-      devType: analysisA.devType,
-      axes: analysisA.axes,
-      stats: statsA,
-      aiDescription: analysisA.aiDescription,
-      similarProject: analysisA.similarProject,
-      learningRoadmap: analysisA.learningRoadmap,
-      analyzedAt: new Date().toISOString(),
-    };
-
-    const resultB: AnalysisResult = {
-      username: statsB.username,
-      avatarUrl: statsB.avatarUrl,
-      name: statsB.name,
-      devType: analysisB.devType,
-      axes: analysisB.axes,
-      stats: statsB,
-      aiDescription: analysisB.aiDescription,
-      similarProject: analysisB.similarProject,
-      learningRoadmap: analysisB.learningRoadmap,
-      analyzedAt: new Date().toISOString(),
-    };
+    const resultA = buildAnalysisResult(statsA, analysisA);
+    const resultB = buildAnalysisResult(statsB, analysisB);
 
     const compatibility = await analyzeCompatibility(
       userA,
