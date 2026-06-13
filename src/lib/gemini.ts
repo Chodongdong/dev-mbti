@@ -58,10 +58,10 @@ ${devTypeOptions}
 {
   "devTypeId": "선택된 유형 ID",
   "axes": {
-    "codeStyle": "functional 또는 oop",
-    "workPattern": "night-sprinter 또는 steady-marathoner",
-    "commitHabit": "perfectionist 또는 fast-experimenter",
-    "documentation": "comment-philosopher 또는 code-is-docs"
+    "codeStyle": "0(완전한 함수형)~100(완전한 객체지향) 사이의 점수",
+    "workPattern": "0(새벽형 스프린터)~100(꾸준한 마라토너) 사이의 점수",
+    "commitHabit": "0(완벽주의)~100(빠른 실험가) 사이의 점수",
+    "documentation": "0(주석 철학자)~100(코드가 문서) 사이의 점수"
   },
   "aiDescription": "이 개발자에 대한 재미있고 통찰력 있는 2~3문장 설명. 실제 데이터를 근거로 작성.",
   "similarProject": "이 개발자의 스타일과 가장 닮은 유명 오픈소스 프로젝트 이름 하나",

@@ -18,19 +18,12 @@ export const AXIS_SHORT_LABELS: Record<AxisKey, string> = {
   documentation: "문서화",
 };
 
-const AXIS_SIDE: Record<AxisKey, Record<string, 0 | 1>> = {
-  codeStyle: { functional: 0, oop: 1 },
-  workPattern: { "night-sprinter": 0, "steady-marathoner": 1 },
-  commitHabit: { perfectionist: 0, "fast-experimenter": 1 },
-  documentation: { "comment-philosopher": 0, "code-is-docs": 1 },
-};
-
+/** axes[key]는 0~100 점수. [low, high] 스케일로 비례 변환한다. */
 export function getAxisValue(
   key: AxisKey,
   axes: DevTypeAxis,
   [low, high]: [number, number] = [0, 100]
 ): number {
-  const side = AXIS_SIDE[key][axes[key]];
-  if (side === undefined) return (low + high) / 2;
-  return side === 0 ? low : high;
+  const score = Math.min(100, Math.max(0, axes[key]));
+  return low + (score / 100) * (high - low);
 }

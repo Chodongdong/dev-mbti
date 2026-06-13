@@ -1,8 +1,12 @@
 export type DevTypeAxis = {
-  codeStyle: "functional" | "oop";
-  workPattern: "night-sprinter" | "steady-marathoner";
-  commitHabit: "perfectionist" | "fast-experimenter";
-  documentation: "comment-philosopher" | "code-is-docs";
+  /** 0 (함수형) ~ 100 (객체지향) */
+  codeStyle: number;
+  /** 0 (새벽 스프린터) ~ 100 (꾸준한 마라토너) */
+  workPattern: number;
+  /** 0 (완벽주의) ~ 100 (빠른 실험가) */
+  commitHabit: number;
+  /** 0 (주석 철학자) ~ 100 (코드가 문서) */
+  documentation: number;
 };
 
 export type DevType = {
