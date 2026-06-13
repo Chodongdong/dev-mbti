@@ -5,31 +5,18 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AXIS_KEYS, AXIS_SHORT_LABELS, getAxisValue } from "@/constants/axes";
 import type { CompareResult } from "@/types";
-
-const AXIS_LABEL_MAP: Record<string, string> = {
-  codeStyle: "코드스타일",
-  workPattern: "작업패턴",
-  commitHabit: "커밋습관",
-  documentation: "문서화",
-};
-
-const AXIS_VALUE_MAP: Record<string, Record<string, number>> = {
-  codeStyle: { functional: 20, oop: 80 },
-  workPattern: { "night-sprinter": 20, "steady-marathoner": 80 },
-  commitHabit: { perfectionist: 20, "fast-experimenter": 80 },
-  documentation: { "comment-philosopher": 20, "code-is-docs": 80 },
-};
 
 interface StyleRadarChartProps {
   compareResult: CompareResult;
 }
 
 export function StyleRadarChart({ compareResult }: StyleRadarChartProps) {
-  const radarData = Object.keys(AXIS_LABEL_MAP).map((key) => ({
-    axis: AXIS_LABEL_MAP[key],
-    A: AXIS_VALUE_MAP[key][compareResult.userA.axes[key as keyof typeof compareResult.userA.axes]] ?? 50,
-    B: AXIS_VALUE_MAP[key][compareResult.userB.axes[key as keyof typeof compareResult.userB.axes]] ?? 50,
+  const radarData = AXIS_KEYS.map((key) => ({
+    axis: AXIS_SHORT_LABELS[key],
+    A: getAxisValue(key, compareResult.userA.axes, [20, 80]),
+    B: getAxisValue(key, compareResult.userB.axes, [20, 80]),
   }));
 
   return (

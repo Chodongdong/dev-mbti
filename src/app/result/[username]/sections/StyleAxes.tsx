@@ -2,23 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AXIS_KEYS, AXIS_LABELS, getAxisValue } from "@/constants/axes";
 import type { DevType, DevTypeAxis } from "@/types";
-
-const AXIS_LABELS: Record<string, [string, string]> = {
-  codeStyle: ["함수형", "객체지향"],
-  workPattern: ["새벽 스프린터", "꾸준한 마라토너"],
-  commitHabit: ["완벽주의", "빠른 실험가"],
-  documentation: ["주석 철학자", "코드가 문서"],
-};
-
-const AXIS_KEYS = ["codeStyle", "workPattern", "commitHabit", "documentation"] as const;
-
-const AXIS_VALUES: Record<string, Record<string, number>> = {
-  codeStyle: { functional: 0, oop: 100 },
-  workPattern: { "night-sprinter": 0, "steady-marathoner": 100 },
-  commitHabit: { perfectionist: 0, "fast-experimenter": 100 },
-  documentation: { "comment-philosopher": 0, "code-is-docs": 100 },
-};
 
 interface StyleAxesProps {
   axes: DevTypeAxis;
@@ -39,7 +24,7 @@ export function StyleAxes({ axes, devType }: StyleAxesProps) {
         <CardContent className="flex flex-col gap-5">
           {AXIS_KEYS.map((key) => {
             const [leftLabel, rightLabel] = AXIS_LABELS[key];
-            const val = AXIS_VALUES[key][axes[key]] ?? 50;
+            const val = getAxisValue(key, axes);
             return (
               <div key={key}>
                 <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
