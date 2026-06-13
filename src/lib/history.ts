@@ -38,7 +38,7 @@ export function getRanking(): RankingItem[] {
   const counts: Record<string, RankingItem> = {};
 
   for (const item of history) {
-    const key = item.devTypeName;
+    const key = item.devTypeId;
     if (!counts[key]) {
       counts[key] = {
         devTypeName: item.devTypeName,
