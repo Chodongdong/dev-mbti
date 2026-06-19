@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,13 +16,8 @@ import { DEV_TYPE_MAP } from "@/constants/devTypes";
 
 export default function HistoryPage() {
   const router = useRouter();
-  const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [ranking, setRanking] = useState<RankingItem[]>([]);
-
-  useEffect(() => {
-    setHistory(getHistory());
-    setRanking(getRanking());
-  }, []);
+  const [history, setHistory] = useState<HistoryItem[]>(() => getHistory());
+  const [ranking, setRanking] = useState<RankingItem[]>(() => getRanking());
 
   const handleClear = () => {
     clearHistory();
@@ -90,10 +86,12 @@ export default function HistoryPage() {
                       onClick={() => router.push(`/result/${item.username}`)}
                       className="flex items-center gap-4 p-4 rounded-xl border bg-card hover:bg-accent transition-colors text-left"
                     >
-                      <img
+                      <Image
                         src={item.avatarUrl}
                         alt={item.username}
-                        className="w-10 h-10 rounded-full shrink-0"
+                        width={40}
+                        height={40}
+                        className="rounded-full shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold truncate">@{item.username}</p>

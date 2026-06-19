@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { AnalysisResult, CompareResult, HistoryItem } from "@/types";
-import { getHistory, addToHistory, clearHistory } from "@/lib/history";
+import { AnalysisResult, CompareResult } from "@/types";
+import { addToHistory } from "@/lib/history";
 
 type AnalysisState = {
   // 분석 상태
@@ -13,9 +13,6 @@ type AnalysisState = {
   compareResult: CompareResult | null;
   compareError: string | null;
 
-  // 히스토리
-  history: HistoryItem[];
-
   // 분석 액션
   analyze: (username: string) => Promise<void>;
   resetAnalysis: () => void;
@@ -23,10 +20,6 @@ type AnalysisState = {
   // 비교 액션
   compare: (userA: string, userB: string) => Promise<void>;
   resetCompare: () => void;
-
-  // 히스토리 액션
-  loadHistory: () => void;
-  removeHistory: () => void;
 };
 
 export const useAnalysisStore = create<AnalysisState>((set) => ({
@@ -38,8 +31,6 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
   compareResult: null,
   compareError: null,
 
-  history: [],
-
   analyze: async (username) => {
     set({ isAnalyzing: true, analysisError: null, analysisResult: null });
     try {
@@ -50,7 +41,6 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
 
       set({ analysisResult: data });
 
-      // 히스토리 저장
       addToHistory({
         username: data.username,
         avatarUrl: data.avatarUrl,
@@ -59,7 +49,6 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
         devTypeEmoji: data.devType.emoji,
         analyzedAt: data.analyzedAt,
       });
-      set({ history: getHistory() });
     } catch (error) {
       set({ analysisError: error instanceof Error ? error.message : "분석 중 오류가 발생했어요." });
     } finally {
@@ -88,11 +77,4 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
   },
 
   resetCompare: () => set({ compareResult: null, compareError: null }),
-
-  loadHistory: () => set({ history: getHistory() }),
-
-  removeHistory: () => {
-    clearHistory();
-    set({ history: [] });
-  },
 }));
