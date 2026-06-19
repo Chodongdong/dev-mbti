@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GitHubStats, DevType, DevTypeAxis } from "@/types";
+import { GitHubStats, DevTypeAxis, DevTypeAnalysis } from "@/types";
 import { DEV_TYPES } from "@/constants/devTypes";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
@@ -69,14 +69,6 @@ ${devTypeOptions}
 }
 `.trim();
 }
-
-export type DevTypeAnalysis = {
-  devType: DevType;
-  axes: DevTypeAxis;
-  aiDescription: string;
-  similarProject: string;
-  learningRoadmap: string[];
-};
 
 type RawDevTypeAnalysis = {
   devTypeId: string;

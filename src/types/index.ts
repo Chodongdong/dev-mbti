@@ -74,3 +74,11 @@ export type HistoryItem = {
   devTypeEmoji: string;
   analyzedAt: string;
 };
+
+export type DevTypeAnalysis = {
+  devType: DevType;
+  axes: DevTypeAxis;
+  aiDescription: string;
+  similarProject: string;
+  learningRoadmap: string[];
+};

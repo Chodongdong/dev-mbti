@@ -1,5 +1,4 @@
-import { AnalysisResult, GitHubStats } from "@/types";
-import { DevTypeAnalysis } from "@/lib/gemini";
+import { AnalysisResult, GitHubStats, DevTypeAnalysis } from "@/types";
 
 export function buildAnalysisResult(stats: GitHubStats, analysis: DevTypeAnalysis): AnalysisResult {
   return {
