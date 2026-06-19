@@ -25,10 +25,10 @@ export default function ResultPage({ params }: { params: Promise<{ username: str
   const result = analysisResult?.username === username ? analysisResult : null;
 
   useEffect(() => {
-    if (!result && !isAnalyzing) {
+    if (!result && !isAnalyzing && !analysisError) {
       analyze(username);
     }
-  }, [username]);
+  }, [username, result, isAnalyzing, analysisError, analyze]);
 
   if (isAnalyzing || (!result && !analysisError)) {
     return (
