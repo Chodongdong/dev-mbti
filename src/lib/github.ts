@@ -20,11 +20,28 @@ async function fetchGitHub(endpoint: string) {
   return res.json();
 }
 
+type GitHubApiUser = {
+  avatar_url: string;
+  name: string | null;
+  bio: string | null;
+  public_repos: number;
+  followers: number;
+  following: number;
+};
+
+type GitHubApiRepo = {
+  name: string;
+  fork: boolean;
+  language: string | null;
+  stargazers_count: number;
+  description: string | null;
+};
+
 export async function getGitHubStats(username: string): Promise<GitHubStats> {
-  const [user, repos] = await Promise.all([
+  const [user, repos] = (await Promise.all([
     fetchGitHub(`/users/${username}`),
     fetchGitHub(`/users/${username}/repos?sort=updated&per_page=30`),
-  ]);
+  ])) as [GitHubApiUser, GitHubApiRepo[]];
 
   // 언어 사용 통계
   const languages: Record<string, number> = {};
@@ -35,9 +52,7 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
   }
 
   // 상위 5개 non-fork repo (커밋/요약 정보 수집에 공통 사용)
-  const topNonForkRepos = repos
-    .filter((r: { fork: boolean }) => !r.fork)
-    .slice(0, 5);
+  const topNonForkRepos = repos.filter((r) => !r.fork).slice(0, 5);
 
   const commitTimeDistribution: Record<string, number> = {};
   const recentCommitMessages: string[] = [];
@@ -45,7 +60,7 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
   let totalMessageLength = 0;
 
   await Promise.all(
-    topNonForkRepos.map(async (repo: { name: string }) => {
+    topNonForkRepos.map(async (repo) => {
       try {
         const commits = await fetchGitHub(
           `/repos/${username}/${repo.name}/commits?author=${username}&per_page=20`
@@ -75,13 +90,12 @@ export async function getGitHubStats(username: string): Promise<GitHubStats> {
     hasReadme = false;
   }
 
-  const topRepos = topNonForkRepos
-    .map((r: { name: string; stargazers_count: number; language: string | null; description: string | null }) => ({
-      name: r.name,
-      stars: r.stargazers_count,
-      language: r.language,
-      description: r.description,
-    }));
+  const topRepos = topNonForkRepos.map((r) => ({
+    name: r.name,
+    stars: r.stargazers_count,
+    language: r.language,
+    description: r.description,
+  }));
 
   return {
     username,
