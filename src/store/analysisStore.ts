@@ -2,6 +2,13 @@ import { create } from "zustand";
 import { AnalysisResult, CompareResult } from "@/types";
 import { addToHistory } from "@/lib/history";
 
+async function fetchJSON<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error);
+  return data;
+}
+
 type AnalysisState = {
   // 분석 상태
   isAnalyzing: boolean;
@@ -34,10 +41,9 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
   analyze: async (username) => {
     set({ isAnalyzing: true, analysisError: null, analysisResult: null });
     try {
-      const res = await fetch(`/api/analyze?username=${encodeURIComponent(username)}`);
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error);
+      const data = await fetchJSON<AnalysisResult>(
+        `/api/analyze?username=${encodeURIComponent(username)}`
+      );
 
       set({ analysisResult: data });
 
@@ -61,12 +67,9 @@ export const useAnalysisStore = create<AnalysisState>((set) => ({
   compare: async (userA, userB) => {
     set({ isComparing: true, compareError: null, compareResult: null });
     try {
-      const res = await fetch(
+      const data = await fetchJSON<CompareResult>(
         `/api/compare?userA=${encodeURIComponent(userA)}&userB=${encodeURIComponent(userB)}`
       );
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error);
 
       set({ compareResult: data });
     } catch (error) {
