@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getGitHubStats } from "@/lib/github";
 import { analyzeDevType } from "@/lib/gemini";
 import { buildAnalysisResult } from "@/lib/analysis";
+import { errorResponse } from "@/lib/api";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -18,7 +19,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(result);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "분석 중 오류가 발생했어요.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return errorResponse(error, "분석 중 오류가 발생했어요.");
   }
 }
