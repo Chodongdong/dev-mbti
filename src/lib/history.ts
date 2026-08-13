@@ -3,8 +3,10 @@ import { HistoryItem } from "@/types";
 const HISTORY_KEY = "dev-mbti-history";
 const MAX_HISTORY = 10;
 
+const isBrowser = () => typeof window !== "undefined";
+
 export function getHistory(): HistoryItem[] {
-  if (typeof window === "undefined") return [];
+  if (!isBrowser()) return [];
   try {
     const raw = localStorage.getItem(HISTORY_KEY);
     return raw ? JSON.parse(raw) : [];
@@ -14,7 +16,7 @@ export function getHistory(): HistoryItem[] {
 }
 
 export function addToHistory(item: HistoryItem): void {
-  if (typeof window === "undefined") return;
+  if (!isBrowser()) return;
   const history = getHistory();
   const filtered = history.filter((h) => h.username !== item.username);
   const updated = [item, ...filtered].slice(0, MAX_HISTORY);
@@ -22,7 +24,7 @@ export function addToHistory(item: HistoryItem): void {
 }
 
 export function clearHistory(): void {
-  if (typeof window === "undefined") return;
+  if (!isBrowser()) return;
   localStorage.removeItem(HISTORY_KEY);
 }
 
