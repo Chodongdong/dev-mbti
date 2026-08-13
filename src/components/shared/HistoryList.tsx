@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAnalysisStore } from "@/store/analysisStore";
 import { Button } from "@/components/ui/button";
 import { Clock, Trash2 } from "lucide-react";
+import { getHistory, clearHistory } from "@/lib/history";
+import type { HistoryItem } from "@/types";
 
 export function HistoryList() {
   const router = useRouter();
-  const { history, loadHistory, removeHistory } = useAnalysisStore();
+  const [history, setHistory] = useState<HistoryItem[]>(() => getHistory());
 
-  useEffect(() => {
-    loadHistory();
-  }, [loadHistory]);
+  const handleRemove = () => {
+    clearHistory();
+    setHistory([]);
+  };
 
   if (history.length === 0) return null;
 
@@ -36,7 +39,7 @@ export function HistoryList() {
             variant="ghost"
             size="sm"
             className="text-xs text-muted-foreground h-auto p-1"
-            onClick={removeHistory}
+            onClick={handleRemove}
           >
             <Trash2 size={12} className="mr-1" />
             삭제
@@ -55,10 +58,12 @@ export function HistoryList() {
               onClick={() => router.push(`/result/${item.username}`)}
               className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-accent transition-colors text-left"
             >
-              <img
+              <Image
                 src={item.avatarUrl}
                 alt={item.username}
-                className="w-8 h-8 rounded-full"
+                width={32}
+                height={32}
+                className="rounded-full shrink-0"
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">@{item.username}</p>
