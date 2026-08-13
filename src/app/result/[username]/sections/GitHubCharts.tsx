@@ -5,9 +5,8 @@ import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CHART_PALETTE } from "@/constants/colors";
 import type { DevType, GitHubStats } from "@/types";
-
-const PIE_COLORS = ["#6366f1", "#f59e0b", "#10b981", "#3b82f6", "#ec4899", "#8b5cf6", "#f97316", "#ef4444"];
 
 const TIME_LABELS: Record<string, string> = {
   morning: "오전(6-12)",
@@ -59,7 +58,7 @@ export function GitHubCharts({ stats, devType }: GitHubChartsProps) {
                 <PieChart>
                   <Pie data={langData} cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={2} dataKey="value">
                     {langData.map((_, i) => (
-                      <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+                      <Cell key={i} fill={CHART_PALETTE[i % CHART_PALETTE.length]} />
                     ))}
                   </Pie>
                   <Tooltip formatter={(value) => [`${value}%`, ""]} />
@@ -68,7 +67,7 @@ export function GitHubCharts({ stats, devType }: GitHubChartsProps) {
               <div className="flex flex-wrap gap-2 mt-2 justify-center">
                 {langData.map((item, i) => (
                   <span key={item.name} className="flex items-center gap-1 text-xs">
-                    <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />
+                    <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: CHART_PALETTE[i % CHART_PALETTE.length] }} />
                     {item.name}
                   </span>
                 ))}

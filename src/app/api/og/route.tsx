@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { DEFAULT_DEV_TYPE_COLOR } from "@/constants/colors";
 
 export const runtime = "edge";
 
@@ -8,7 +9,7 @@ export async function GET(req: NextRequest) {
   const username = searchParams.get("username") ?? "unknown";
   const typeName = searchParams.get("type") ?? "개발자";
   const emoji = searchParams.get("emoji") ?? "🧬";
-  const color = searchParams.get("color") ?? "#6366f1";
+  const color = searchParams.get("color") ?? DEFAULT_DEV_TYPE_COLOR;
   const shortDesc = searchParams.get("desc") ?? "";
 
   return new ImageResponse(

@@ -13,6 +13,7 @@ import { getHistory, clearHistory, getRanking } from "@/lib/history";
 import type { RankingItem } from "@/lib/history";
 import type { HistoryItem } from "@/types";
 import { DEV_TYPE_MAP } from "@/constants/devTypes";
+import { DEFAULT_DEV_TYPE_COLOR } from "@/constants/colors";
 
 export default function HistoryPage() {
   const router = useRouter();
@@ -120,7 +121,7 @@ export default function HistoryPage() {
 
               <div className="flex flex-col gap-3">
                 {ranking.map((item, i) => {
-                  const color = DEV_TYPE_MAP[item.devTypeId]?.color ?? "#6366f1";
+                  const color = DEV_TYPE_MAP[item.devTypeId]?.color ?? DEFAULT_DEV_TYPE_COLOR;
                   const pct = Math.round((item.count / maxCount) * 100);
 
                   return (
